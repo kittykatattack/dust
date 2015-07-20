@@ -42,7 +42,7 @@ texture, Pixi Dust will randomly display different frames for each particle.
 The fourth argument is the container that you want to add the particles to; 
 in this example the particles will be added to the stage. The fifth argument 
 is the number of particles you want to create. The `create` method returns an array 
-containing reference to all the sprites being used as particle, which might 
+containing references to all the sprites being used as particles, which might 
 be useful if you need to access them for reasons such as doing collision detection.
 
 This is the effect that this code produces:
@@ -60,14 +60,14 @@ burst of particles, such as a key press or mouse click.
 Using a `ParticleContainer`
 -------------------------
 
-In the example code above the particles that we created were all added
+In the example code above the particles were all added
 to the root `stage` container object (the fourth argument.) However,
 you can add the particles to any container you like, or to any other
 sprite. You can use Pixi's `ParticleContainer` to display a large
 number of sprites on screen at a high frame rate. If you want to use
 `ParticleContainer` for your particles, just add the name of the
-`ParticleContainer` object you want to use in the `create` method's 4
-argument. Here's how you could modify the example code above to add
+`ParticleContainer` object you want to use in the `create` method's
+4th argument. Here's how you could modify the example code above to add
 the particles to a `ParticleContainer` called `starContainer`.
 ```js
 //Create the `ParticleContainer` and add it to the `stage`
@@ -153,7 +153,7 @@ produces particles at fixed intervals to produce just such a stream
 effect, and you can create one using Pixi Dust's `emitter` method. The
 emitter has `play` and `stop` methods that let you turn the particle
 flow on and off and you can define the interval at which particles are created.
-Here's the general format for using Pixi Dust's `emitte`r method. It
+Here's the general format for using Pixi Dust's `emitter` method. It
 takes two arguments. The first argument is the interval, in
 milliseconds, between which burst of particles are created. The second
 argument is the same `create` method from the previous examples.
@@ -200,12 +200,12 @@ within the upper half of the circle. Gravity is acting on the
 particles the entire time, however, so they'll eventually fall towards
 the bottom of the canvas. That's what creates the cascading fountain effect.
 You can use the emitter's  play and stop methods to turn the particle
-stream on or off at any time in you code, like this:
+stream on or off at any time in your code, like this:
 ```js
 particleStream.play();
 particleStream.stop();
 ```
-This is all you need to know to start working with Pixi Dust.
+This is all you need to know to start making particle effects with Pixi Dust.
 
 
 
