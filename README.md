@@ -6,15 +6,17 @@ Pixi Dust is a quick and easy particle effects engine for [Pixi](https://github.
 Setting up
 ----------
 
-To get started with Pixi Dust, first create an instance of it at the beginning of your program:
+To get started with Pixi Dust, first create an instance of it at the
+beginning of your program. Supply the `PIXI` instance as the
+constructor argument.
 ```
-let particles = new PixiDust();
+let pd = new PixiDust(PIXI);
 ```
 Then, very importantly, make sure you call Pixi Dust's `update` function inside your game loop. 
 ```js
 function gameLoop() {
   requestAnimationFrame(gameLoop);
-  particles.update();
+  pd.update();
 }
 ```
 You're now ready to use Pixi Dust to make and animate particles.
@@ -26,7 +28,7 @@ using the `create` method. Here's how to create 50 star sprites on the
 stage at an x/y position of 128/128. (This code assumes you have a
 loaded texture called `star.png`).
 ```js
-let stars = particles.create(
+let stars = pd.create(
   128,                               //x start position
   128,                               //y start position
   () => new PIXI.Sprite("star.png"), //Sprite function
@@ -78,7 +80,7 @@ let starContainer = new PIXI.ParticleContainer(
 stage.addChild(starContainer);
 
 //Create star particles and add them to the `starContainer`
-let stars = particles.create(
+let stars = pd.create(
   128, 128, 
   () => new PIXI.Sprite("star.png"), 
   starContainer,
@@ -97,7 +99,7 @@ The `create` method has a total of 19 different parameters you can set
 to fully customize how the particles behave. Here's the full parameter
 list, with examples of the kinds of values you could use.
 ```js
-let stars = particles.create(
+let stars = pd.create(
   128,                                //x start position
   128,                                //y start position
   () => new PIXI.Sprite("star.png"),  //Sprite function
@@ -158,7 +160,7 @@ takes two arguments. The first argument is the interval, in
 milliseconds, between which burst of particles are created. The second
 argument is the same `create` method from the previous examples.
 ```js
-let particleStream = particles.emitter( 
+let particleStream = pd.emitter( 
   100,                                  
   () => particles.create();
 );
@@ -168,7 +170,7 @@ appear to flow in a continuous stream. Here's some code that produces
 a star fountain effect. The stars appear in the center of the canvas,
 shoot up, and then cascade down with the pull of gravity. 
 ```js
-let particleStream = particles.emitter(
+let particleStream = pd.emitter(
   100,
   () => particles.create(
     128, 128,
@@ -199,12 +201,15 @@ The stars are created at the center origin point then fly up and out
 within the upper half of the circle. Gravity is acting on the
 particles the entire time, however, so they'll eventually fall towards
 the bottom of the canvas. That's what creates the cascading fountain effect.
-You can use the emitter's  play and stop methods to turn the particle
+You can use the emitter's play and stop methods to turn the particle
 stream on or off at any time in your code, like this:
 ```js
 particleStream.play();
 particleStream.stop();
 ```
+The particle emitter also has a Boolean `playing` property that will
+be `true` when the paricle emitter is playing, and `false` when it's
+been stopped.
 This is all you need to know to start making particle effects with Pixi Dust.
 
 

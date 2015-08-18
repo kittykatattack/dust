@@ -1,6 +1,15 @@
 class PixiDust {
-  constructor () {
-    if (!PIXI) throw new Error("Please load Pixi before using pixiDust.js"); 
+  constructor (renderingEngine = PIXI) {
+    if (renderingEngine === undefined) throw new Error("Please assign a rendering engine in the constructor before using pixiDust.js"); 
+
+    //Find out which rendering engine is being used (the default is Pixi)
+    this.renderer = "";
+
+    //If the `renderingEngine` is Pixi, set up Pixi object aliases
+    if (renderingEngine.ParticleContainer) {
+      this.Container = renderingEngine.Container;
+      this.renderer = "pixi"
+    }
     
     //The `particles` array stores all the particles you make
     this.globalParticles = [];
@@ -19,7 +28,7 @@ class PixiDust {
     x = 0,
     y = 0,
     spriteFunction = () => console.log("Sprite creation function"),
-    container = new PIXI.Container(),
+    container = () => new this.Container(),
     numberOfParticles = 20,
     gravity = 0,
     randomSpacing = true,
