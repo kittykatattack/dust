@@ -35,11 +35,13 @@ stage at an x/y position of 128/128. (This code assumes you have a
 loaded texture called `star.png`).
 ```js
 let stars = d.create(
-  128,                               //x start position
-  128,                               //y start position
-  () => new PIXI.Sprite("star.png"), //Sprite function
-  stage,                             //Container for particles
-  50                                 //Number of particles
+  128,                                       //x start position
+  128,                                       //y start position
+  () => new PIXI.Sprite(                     //Sprite function
+    PIXI.utils.TextureCache["star.png"]
+  ), 
+  stage,                                     //Container for particles
+  50                                         //Number of particles
 );
 ```
 The first two arguments are the x/y point where the particles will
@@ -88,7 +90,9 @@ stage.addChild(starContainer);
 //Create star particles and add them to the `starContainer`
 let stars = d.create(
   128, 128, 
-  () => new PIXI.Sprite("star.png"), 
+  () => new PIXI.Sprite(
+    PIXI.utils.TextureCache["star.png"]
+  ), 
   starContainer,
   50
 );
@@ -106,19 +110,21 @@ to fully customize how the particles behave. Here's the full parameter
 list, with examples of the kinds of values you could use.
 ```js
 let stars = d.create(
-  128,                                //x start position
-  128,                                //y start position
-  () => new PIXI.Sprite("star.png"),  //Sprite function
-  stage                               //Container for particles
-  50,                                 //Number of particles
-  0.1,                                //Gravity
-  true,                               //Random spacing
-  0, 6.28,                            //Min/max angle
-  12, 24,                             //Min/max size
-  1, 2,                               //Min/max speed
-  0.005, 0.01,                        //Min/max scale speed 
-  0.005, 0.01,                        //Min/max alpha speed
-  0.05, 0.1                           //Min/max rotation speed
+  128,                                  //x start position
+  128,                                  //y start position
+  () => new PIXI.Sprite(                //Sprite function
+    PIXI.utils.TextureCache["star.png"]
+  ),  
+  stage                                 //Container for particles
+  50,                                   //Number of particles
+  0.1,                                  //Gravity
+  true,                                 //Random spacing
+  0, 6.28,                              //Min/max angle
+  12, 24,                               //Min/max size
+  1, 2,                                 //Min/max speed
+  0.005, 0.01,                          //Min/max scale speed 
+  0.005, 0.01,                          //Min/max alpha speed
+  0.05, 0.1                             //Min/max rotation speed
 );
 ```
 You can see that most of the parameters describe a range between the
@@ -180,7 +186,9 @@ let particleStream = pd.emitter(
   100,
   () => particles.create(
     128, 128,
-    () => new PIXI.Sprite("star.png"),
+    () => new PIXI.Sprite(
+      PIXI.utils.TextureCache["star.png"]
+    ),
     stage,
     30,
     0.1,
