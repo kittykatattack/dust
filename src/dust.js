@@ -1,20 +1,20 @@
 export class Dust {
-  constructor (renderingEngine = PIXI) {
-    if (renderingEngine === undefined) throw new Error("Please assign a rendering engine in the constructor before using pixiDust.js"); 
+  constructor(renderingEngine = PIXI) {
+    if (renderingEngine === undefined) throw new Error("Please assign a rendering engine in the constructor before using pixiDust.js");
 
     //Find out which rendering engine is being used (the default is Pixi)
     this.renderer = "";
 
     //If the `renderingEngine` is Pixi, set up Pixi object aliases
-    if (renderingEngine.ParticleContainer) {
+    if (renderingEngine.particles.ParticleContainer) {
       this.Container = renderingEngine.Container;
       this.renderer = "pixi";
     }
-    
+
     //The `particles` array stores all the particles you make
     this.globalParticles = [];
   }
-  
+
   //Random number functions
   randomFloat(min, max) {
     return min + Math.random() * (max - min);
@@ -38,8 +38,8 @@ export class Dust {
     minScaleSpeed = 0.01, maxScaleSpeed = 0.05,
     minAlphaSpeed = 0.02, maxAlphaSpeed = 0.02,
     minRotationSpeed = 0.01, maxRotationSpeed = 0.03
-  ){
-   
+  ) {
+
     //An array to store the curent batch of particles
     let particles = [];
 
@@ -56,15 +56,15 @@ export class Dust {
     let spacing = (maxAngle - minAngle) / (numberOfParticles - 1);
 
     //Create an angle value for each particle and push that //value into the `angles` array
-    for(let i = 0; i < numberOfParticles; i++) {
+    for (let i = 0; i < numberOfParticles; i++) {
 
       //If `randomSpacing` is `true`, give the particle any angle 
       //value between `minAngle` and `maxAngle`
       if (randomSpacing) {
         angle = this.randomFloat(minAngle, maxAngle);
         angles.push(angle);
-      } 
-      
+      }
+
       //If `randomSpacing` is `false`, space each particle evenly, 
       //starting with the `minAngle` and ending with the `maxAngle`
       else {
@@ -76,7 +76,7 @@ export class Dust {
 
     //A function to make particles
     let makeParticle = (angle) => {
-    
+
       //Create the particle using the supplied sprite function
       let particle = spriteFunction();
 
@@ -106,7 +106,7 @@ export class Dust {
       let speed = this.randomFloat(minSpeed, maxSpeed);
       particle.vx = speed * Math.cos(angle);
       particle.vy = speed * Math.sin(angle);
-      
+
       //Push the particle into the `particles` array.
       //The `particles` array needs to be updated by the game loop each frame particles.push(particle);
       particles.push(particle);
@@ -124,7 +124,7 @@ export class Dust {
         //Move the particle
         particle.x += particle.vx;
         particle.y += particle.vy;
-        
+
         //Change the particle's `scale`
         if (particle.scale.x - particle.scaleSpeed > 0) {
           particle.scale.x -= particle.scaleSpeed;
@@ -135,15 +135,15 @@ export class Dust {
 
         //Change the particle's rotation
         particle.rotation += particle.rotationSpeed;
-          
+
         //Change the particle's `alpha`
         particle.alpha -= particle.alphaSpeed;
-          
+
         //Remove the particle if its `alpha` reaches zero
         if (particle.alpha <= 0) {
           container.removeChild(particle);
           particles.splice(particles.indexOf(particle), 1);
-        } 
+        }
       };
     };
 
@@ -156,33 +156,33 @@ export class Dust {
 
   //A particle emitter
   emitter(interval, particleFunction) {
-    let emitter = {},
-        timerInterval = undefined;
+    let emitterObject = {},
+      timerInterval = undefined;
 
-    emitter.playing = false;
-  
+    emitterObject.playing = false;
+
     function play() {
-      if (!emitter.playing) {
-         particleFunction();
-         timerInterval = setInterval(emitParticle.bind(this), interval);
-         emitter.playing = true;
-       }   
-    }  
+      if (!emitterObject.playing) {
+        particleFunction();
+        timerInterval = setInterval(emitParticle.bind(this), interval);
+        emitterObject.playing = true;
+      }
+    }
 
     function stop() {
-      if (emitter.playing) {
+      if (emitterObject.playing) {
         clearInterval(timerInterval);
-        emitter.playing = false;
+        emitterObject.playing = false;
       }
     }
 
     function emitParticle() {
       particleFunction();
     }
-    
-    emitter.play = play;
-    emitter.stop = stop;
-    return emitter;
+
+    emitterObject.play = play;
+    emitterObject.stop = stop;
+    return emitterObject;
   }
 
   //A function to update the particles in the game loop
@@ -193,27 +193,26 @@ export class Dust {
     if (this.globalParticles.length > 0) {
 
       //If it does, Loop through the particle arrays in reverse
-      for(let i = this.globalParticles.length - 1; i >= 0; i--) {
-        
+      for (let i = this.globalParticles.length - 1; i >= 0; i--) {
+
         //Get the current particle sub-array
         let particles = this.globalParticles[i];
 
         //Loop through the `particles` sub-array and update the
         //all the particle sprites that it contains
         if (particles.length > 0) {
-          for (let j = particles.length - 1; j >= 0; j--)  {
+          for (let j = particles.length - 1; j >= 0; j--) {
             let particle = particles[j];
             particle.updateParticle();
           }
-        } 
+        }
 
         //Remove the particle array from the `globalParticles` array if doesn't
         //contain any more sprites
         else {
           this.globalParticles.splice(this.globalParticles.indexOf(particles), 1);
         }
-      } 
+      }
     }
   }
 }
-

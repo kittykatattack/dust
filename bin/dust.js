@@ -2,11 +2,15 @@
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Dust = (function () {
+var Dust = exports.Dust = (function () {
   function Dust() {
-    var renderingEngine = arguments[0] === undefined ? PIXI : arguments[0];
+    var renderingEngine = arguments.length <= 0 || arguments[0] === undefined ? PIXI : arguments[0];
 
     _classCallCheck(this, Dust);
 
@@ -16,7 +20,7 @@ var Dust = (function () {
     this.renderer = "";
 
     //If the `renderingEngine` is Pixi, set up Pixi object aliases
-    if (renderingEngine.ParticleContainer) {
+    if (renderingEngine.particles.ParticleContainer) {
       this.Container = renderingEngine.Container;
       this.renderer = "pixi";
     }
@@ -25,10 +29,10 @@ var Dust = (function () {
     this.globalParticles = [];
   }
 
+  //Random number functions
+
   _createClass(Dust, [{
     key: "randomFloat",
-
-    //Random number functions
     value: function randomFloat(min, max) {
       return min + Math.random() * (max - min);
     }
@@ -37,37 +41,38 @@ var Dust = (function () {
     value: function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-  }, {
-    key: "create",
 
     //Use the create function to create new particle effects
+
+  }, {
+    key: "create",
     value: function create() {
-      var x = arguments[0] === undefined ? 0 : arguments[0];
-      var y = arguments[1] === undefined ? 0 : arguments[1];
-      var spriteFunction = arguments[2] === undefined ? function () {
+      var x = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+      var y = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+      var spriteFunction = arguments.length <= 2 || arguments[2] === undefined ? function () {
         return console.log("Sprite creation function");
       } : arguments[2];
-      var container = arguments[3] === undefined ? function () {
+      var container = arguments.length <= 3 || arguments[3] === undefined ? function () {
         return new _this.Container();
       } : arguments[3];
-      var numberOfParticles = arguments[4] === undefined ? 20 : arguments[4];
-      var gravity = arguments[5] === undefined ? 0 : arguments[5];
-      var randomSpacing = arguments[6] === undefined ? true : arguments[6];
-      var minAngle = arguments[7] === undefined ? 0 : arguments[7];
-      var maxAngle = arguments[8] === undefined ? 6.28 : arguments[8];
-      var minSize = arguments[9] === undefined ? 4 : arguments[9];
-      var maxSize = arguments[10] === undefined ? 16 : arguments[10];
-      var minSpeed = arguments[11] === undefined ? 0.3 : arguments[11];
-      var maxSpeed = arguments[12] === undefined ? 3 : arguments[12];
-      var minScaleSpeed = arguments[13] === undefined ? 0.01 : arguments[13];
-      var maxScaleSpeed = arguments[14] === undefined ? 0.05 : arguments[14];
-      var minAlphaSpeed = arguments[15] === undefined ? 0.02 : arguments[15];
-      var maxAlphaSpeed = arguments[16] === undefined ? 0.02 : arguments[16];
+      var numberOfParticles = arguments.length <= 4 || arguments[4] === undefined ? 20 : arguments[4];
+      var gravity = arguments.length <= 5 || arguments[5] === undefined ? 0 : arguments[5];
+      var randomSpacing = arguments.length <= 6 || arguments[6] === undefined ? true : arguments[6];
+      var minAngle = arguments.length <= 7 || arguments[7] === undefined ? 0 : arguments[7];
+      var maxAngle = arguments.length <= 8 || arguments[8] === undefined ? 6.28 : arguments[8];
+      var minSize = arguments.length <= 9 || arguments[9] === undefined ? 4 : arguments[9];
+      var maxSize = arguments.length <= 10 || arguments[10] === undefined ? 16 : arguments[10];
+      var minSpeed = arguments.length <= 11 || arguments[11] === undefined ? 0.3 : arguments[11];
+      var maxSpeed = arguments.length <= 12 || arguments[12] === undefined ? 3 : arguments[12];
+      var minScaleSpeed = arguments.length <= 13 || arguments[13] === undefined ? 0.01 : arguments[13];
+      var maxScaleSpeed = arguments.length <= 14 || arguments[14] === undefined ? 0.05 : arguments[14];
+      var minAlphaSpeed = arguments.length <= 15 || arguments[15] === undefined ? 0.02 : arguments[15];
+      var maxAlphaSpeed = arguments.length <= 16 || arguments[16] === undefined ? 0.02 : arguments[16];
 
       var _this = this;
 
-      var minRotationSpeed = arguments[17] === undefined ? 0.01 : arguments[17];
-      var maxRotationSpeed = arguments[18] === undefined ? 0.03 : arguments[18];
+      var minRotationSpeed = arguments.length <= 17 || arguments[17] === undefined ? 0.01 : arguments[17];
+      var maxRotationSpeed = arguments.length <= 18 || arguments[18] === undefined ? 0.03 : arguments[18];
 
       //An array to store the curent batch of particles
       var particles = [];
@@ -97,10 +102,10 @@ var Dust = (function () {
         //If `randomSpacing` is `false`, space each particle evenly,
         //starting with the `minAngle` and ending with the `maxAngle`
         else {
-          if (angle === undefined) angle = minAngle;
-          angles.push(angle);
-          angle += spacing;
-        }
+            if (angle === undefined) angle = minAngle;
+            angles.push(angle);
+            angle += spacing;
+          }
       }
 
       //A function to make particles
@@ -184,28 +189,29 @@ var Dust = (function () {
       //Return the `particles` array back to the main program
       return particles;
     }
-  }, {
-    key: "emitter",
 
     //A particle emitter
+
+  }, {
+    key: "emitter",
     value: function emitter(interval, particleFunction) {
-      var emitter = {},
+      var emitterObject = {},
           timerInterval = undefined;
 
-      emitter.playing = false;
+      emitterObject.playing = false;
 
       function play() {
-        if (!emitter.playing) {
+        if (!emitterObject.playing) {
           particleFunction();
           timerInterval = setInterval(emitParticle.bind(this), interval);
-          emitter.playing = true;
+          emitterObject.playing = true;
         }
       }
 
       function stop() {
-        if (emitter.playing) {
+        if (emitterObject.playing) {
           clearInterval(timerInterval);
-          emitter.playing = false;
+          emitterObject.playing = false;
         }
       }
 
@@ -213,14 +219,15 @@ var Dust = (function () {
         particleFunction();
       }
 
-      emitter.play = play;
-      emitter.stop = stop;
-      return emitter;
+      emitterObject.play = play;
+      emitterObject.stop = stop;
+      return emitterObject;
     }
-  }, {
-    key: "update",
 
     //A function to update the particles in the game loop
+
+  }, {
+    key: "update",
     value: function update() {
 
       //Check so see if the `globalParticles` array contains any
@@ -245,8 +252,8 @@ var Dust = (function () {
           //Remove the particle array from the `globalParticles` array if doesn't
           //contain any more sprites
           else {
-            this.globalParticles.splice(this.globalParticles.indexOf(particles), 1);
-          }
+              this.globalParticles.splice(this.globalParticles.indexOf(particles), 1);
+            }
         }
       }
     }
