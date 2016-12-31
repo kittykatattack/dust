@@ -47,7 +47,7 @@ let stars = d.create(
 The first two arguments are the x/y point where the particles will
 appear. The third argument is a function that returns the sprite you
 want to use for each particle. Use any sprite creation method you
-like. If you use a `MovieClip` sprite and supply more than one frame
+like. If you use a `AnimatedSprite` sprite and supply more than one frame
 texture, Dust will randomly display different frames for each particle.
 The fourth argument is the container that you want to add the particles to; 
 in this example the particles will be added to the stage. The fifth argument 
