@@ -1,4 +1,4 @@
-export class Dust {
+class Dust {
   constructor(renderingEngine = PIXI) {
     if (renderingEngine === undefined) throw new Error("Please assign a rendering engine in the constructor before using pixiDust.js");
 
