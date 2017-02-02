@@ -1,7 +1,9 @@
-Dust
+Dust - Particle Effects for Pixi (v3.9)
 ====
 
 Dust is a quick and easy particle effects engine for [Pixi](https://github.com/GoodBoyDigital/pixi.js/).
+
+(Important! This library targets Pixi v3.9, which is the most stable version of Pixi, and is the only version I can recommend using. This library will eventually be upgraded for Pixi v4 when the v4 branch matures.)
 
 Setting up
 ----------
