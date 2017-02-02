@@ -16,7 +16,7 @@ var Dust = (function () {
     this.renderer = "";
 
     //If the `renderingEngine` is Pixi, set up Pixi object aliases
-    if (renderingEngine.particles.ParticleContainer) {
+    if (renderingEngine.ParticleContainer) {
       this.Container = renderingEngine.Container;
       this.renderer = "pixi";
     }
