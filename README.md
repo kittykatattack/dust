@@ -5,6 +5,16 @@ Dust is a quick and easy particle effects engine for [Pixi](https://github.com/G
 
 (Important! This library targets Pixi v3.9, which is the most stable version of Pixi, and is the only version I can recommend using. This library will eventually be upgraded for Pixi v4 when the v4 branch matures.)
 
+Table of contents
+-----------------
+
+[Setting up](#settingup) <br>
+[Making Particle](#particles) <br>
+[Using a `ParticleContainer`](#container) <br>
+[Customizing the particle options](#customizing) <br>
+[Using a particle emitter](#emitter) <br>
+
+<a id="settingup"></a>
 Setting up
 ----------
 
@@ -29,6 +39,7 @@ function gameLoop() {
 ```
 You're now ready to use Dust to make and animate particles.
 
+<a id="particles"></a>
 Making particles
 ----------------
 With Dust all set up and running, you can now make particles
@@ -69,6 +80,7 @@ tune each of these properties to produce exactly the effect you need.
 You can drop this code anywhere in your program to create a single
 burst of particles, such as a key press or mouse click. 
 
+<a id="particles"></a>
 Using a `ParticleContainer`
 -------------------------
 
@@ -104,6 +116,7 @@ sprites, so, unless you're animating that many particles, you probably
 won't notice any performance improvement over using ordinary
 `Container` objects.
 
+<a id="customizing"></a>
 Customizing the particle options
 --------------------------------
 
@@ -159,6 +172,7 @@ By carefully choosing the sprite for the particle and finely adjusting
 each parameter, you can use this all-purpose `create` method
 to simulate everything from liquid to fire. 
 
+<a id="emitter"></a>
 Using a particle emitter
 ------------------------
 
