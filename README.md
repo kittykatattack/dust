@@ -9,7 +9,7 @@ Table of contents
 -----------------
 
 [Setting up](#settingup) <br>
-[Making Particle](#particles) <br>
+[Making Particles](#particles) <br>
 [Using a `ParticleContainer`](#container) <br>
 [Customizing the particle options](#customizing) <br>
 [Using a particle emitter](#emitter) <br>
